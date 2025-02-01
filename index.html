@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <style>
+        body {
+            margin: 0; 
+            padding: 0;
+            font-family: 'Roboto', sans-serif; 
+            background-color: #E5E5E5;
+        }
+        * { box-sizing: border-box; transition: all 300ms; } 
+        header { display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%;
+            height: 80px; background-color: #202634; box-shadow: 0px 0px 4px grey; padding: 0 40px; 
+        }
+        div.Logo { font-size: 26px; color:#9CFF00; 
+            cursor: pointer; transition: color 0.3s;
+        }
+        div.Logo:hover { color: #fafafa; }
+        div.buttons-container { display: flex; flex-direction: row; }
+        button { display: block; padding: 12px 20px 13px; cursor: pointer; margin-right: 10px; border-radius: 6px; border: none; background-color: #9f9f9f; color: #202634; font-size: 16px; font-weight: 600; transition: background-color 0.3s; }
+        button:last-child { margin-right: 0; } 
+        button:hover { background-color: #B0F347; } 
+        div.feedback { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; cursor: pointer; }
+        div.feedback span:first-child { display: block; color: #E5E5E5; margin-bottom: 6px; margin-top: 6px; }
+        div.feedback span:last-child { display: block; background-color: #E5E5E5; height: 2.4px; width: 0px; border-radius: 2px; }
+        div.feedback:hover span:last-child { width: calc(100% + 2px); background-color: #B0F347; }
+        div.form { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; width: 500px; 
+            min-height: 60px; box-shadow: 0px 0px 4px grey; border-radius: 8px; padding: 30px; margin: 40px auto;
+        }
+        div.form input { display: block; width: 100%; outline: none; border: none; height: 44px; 
+            border-radius: 4px; padding-bottom: 3px; padding-left: 16px; margin-bottom: 12px;
+        } 
+        div.form input:last-child { margin-bottom: 0; }
+        div.form button { display: block; width: 100%; outline: none; border: none; height: 44px; 
+            border-radius: 4px; padding-bottom: 3px; padding-left: 16px; margin-bottom: 12px; background-color: #B0F347; 
+            color: #202634; font-size: 16px; font-weight: 600; transition: background-color 0.3s;
+        }
+        div.form button:hover { background-color: #202634; }
+        div.form button:hover { color: #ffffff; }
+        div.footer { display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%;
+            height: 200px; background-color: #202634; box-shadow: 0px 0px 4px grey; padding: 0 40px; 
+        }
+        footer { background-color: #202634; color: #E5E5E5; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; }
+        div.footer .text, div.footer .socials { display: flex; flex-direction: column; }
+        div.footer .text p, div.footer .socials p { margin: 5px 0; cursor: pointer; transition: color 0.3s; font-size: 14px; }
+        div.footer .text p:hover, div.footer .socials p:hover { color: #B0F347; }
+        div.footer .socials img { width: 24px; height: 24px; margin: 5px 0; transition: transform 0.3s; cursor: pointer; }
+        div.footer .socials img:hover { transform: scale(1.2); }
+
+        .hero { background-color: #202634; color: #E5E5E5; padding: 60px 40px; text-align: center; }
+        .services, .testimonials, .gallery, .contact, .content-first, .content-second, .content-third { padding: 40px; }
+        .services h2, .testimonials h2, .gallery h2, .contact h2, .content-first h2, .content-second h2, .content-third h2 { text-align: center; margin-bottom: 20px; }
+        .service-item, .testimonial-item, .gallery-item, .content-item { margin-bottom: 20px; }
+        .gallery img { width: 100%; height: auto; border-radius: 8px; }
+
+    </style>
+</head>
+<body>
+    <div id="root"></div>   
+    <script type="text/babel">
+        const { Fragment } = React;
+
+        const topMenu = {
+            about: "О нас", 
+            soc: "Контакты",
+            price: "Прайс",
+            timework: "Время работы"
+        }
+
+        const FormMenu = {
+            send: "Хочу сделать заказ!", 
+            cancel: "Очистить форму"
+        }
+
+        const PlaceHolderMenu = {
+            name: "Ваше имя",
+            email: "Ваш email",
+            phone: "Ваш телефон",
+            comment: "Комментарий",
+            send: "Отправить",
+        }
+
+        const logoText = "Logo"
+        const call = "Позвонить"
+
+
+        const textactive = true
+        const bgactive = true
+
+        function Logo(props) {
+            return (
+                <div className={"Logo"}>{logoText}</div>
+            )
+        }
+
+        function ButtonsContainer(props) {
+            return (
+                <div className={"buttons-container"}>
+                    <button>{topMenu.about}</button>
+                    <button>{topMenu.soc}</button>
+                    <button>{topMenu.price}</button> 
+                    <button>{topMenu.timework}</button>     
+                </div>
+            )
+        }
+
+        function Feedback(props) {
+            return (
+                <div className={"feedback"}>
+                    <span style={{color: textactive ? "#B0F347" : "#ff0000"}}>{call}</span>
+                    <span style={{backgroundColor: bgactive ? "#B0F347" : "#ff0000"}}></span>
+                </div>
+            )
+        }
+
+
+        function Services(props) {
+            return (
+                <div className="services">
+                    <h2>Our Services</h2>
+                    <div className="service-item">
+                        <h3>Service 1</h3>
+                        <p>Description of Service 1</p>
+                    </div>
+                    <div className="service-item">
+                        <h3>Service 2</h3>
+                        <p>Description of Service 2</p>
+                    </div>
+                    <div className="service-item">
+                        <h3>Service 3</h3>
+                        <p>Description of Service 3</p>
+                    </div>
+                </div>
+            )
+        }
+
+        function Testimonials(props) {
+            return (
+                <div className="testimonials">
+                    <h2>What Our Clients Say</h2>
+                    <div className="testimonial-item">
+                        <p>"Great service!" - Client 1</p>
+                    </div>
+                    <div className="testimonial-item">
+                        <p>"Highly recommend!" - Client 2</p>
+                    </div>
+                    <div className="testimonial-item">
+                        <p>"Will come back again!" - Client 3</p>
+                    </div>
+                </div>
+            )
+        }
+
+        function Gallery(props) {
+            return (
+                <div className="gallery">
+                    <h2>Gallery</h2>
+                    <div className="gallery-item">
+                        <img src="https://via.placeholder.com/300" alt="Gallery Image 1"/>
+                    </div>
+                    <div className="gallery-item">
+                        <img src="https://via.placeholder.com/300" alt="Gallery Image 2"/>
+                    </div>
+                    <div className="gallery-item">
+                        <img src="https://via.placeholder.com/300" alt="Gallery Image 3"/>
+                    </div>
+                </div>
+            )
+        }
+
+
+        function Form(props) {
+            return (
+                <div className={"form"}> 
+                    <input 
+                        type={"text"} 
+                        placeholder={PlaceHolderMenu.name}
+                    />
+                    <input
+                        type={"text"} 
+                        placeholder={PlaceHolderMenu.phone}
+                    />
+                    <input
+                        type={"text"} 
+                        placeholder={PlaceHolderMenu.email}
+                    />
+                    <input
+                        type={"text"} 
+                        placeholder={PlaceHolderMenu.comment}
+                    />
+
+                    <button>{FormMenu.send}</button>
+                    <button>{FormMenu.cancel}</button>
+                </div>
+            )
+        }
+
+        function AppfooterText(props) {
+            return (
+                <div className={"footer"}>
+                    <div className={"text"}>
+                        <p>Все права защищены</p>
+                        <p>Политика конфиденциальности</p>
+                        <p>Договор оферты</p>
+                        <p>Пользовательское соглашение</p>
+                        <p>Помощь</p>
+                    </div>
+                </div>
+            )
+        }
+
+        function АppFooterSocial(props) {
+            return (
+                <div className={"footer"}>
+                    <div className={"socials"}>
+                        <p>Социальные сети</p>
+                        <img src={"https://img.icons8.com/ios-filled/50/000000/facebook.png"} alt={"facebook"}/>
+                        <img src={"https://img.icons8.com/ios-filled/50/000000/instagram-new.png"} alt={"instagram"}/>
+                        <img src={"https://img.icons8.com/ios-filled/50/000000/vk-com.png"} alt={"vk"}/>
+                    </div>
+                </div>
+            )
+        }
+
+        function Header(props) {
+            return (
+                <header>
+                    <Logo/>
+                    <ButtonsContainer/>
+                    <Feedback/>
+                </header>
+            )
+        }
+
+
+        function Content(props) {
+            return (
+                <div className={"content"}>
+                    <Services/>
+                    <Testimonials/>
+                    <Gallery/>
+                </div>
+            )
+        }
+
+        
+        function Main(props) {
+            return (
+                <main>
+                    <Form/>
+                </main>
+            )
+        }
+
+
+        function Footer(props) {
+            return (
+                <footer>
+                    <AppfooterText/>
+                    <АppFooterSocial/>
+                </footer>
+            )
+        }
+
+        function App() {
+            return (
+                <Fragment>
+                    <Header/>
+                    <Content/>
+                    <Main/>
+                    <Footer/>
+                </Fragment>
+            )
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+    </script>
+    
+</body>
+</html>
